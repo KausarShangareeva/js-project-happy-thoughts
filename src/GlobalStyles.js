@@ -42,6 +42,7 @@ body {
   --bg-quote: #f8f9fa;
   --bg-like: #dee2e6;
   --bg-active: #ff8787;
+  --bg-loading: #0072fcff;
   --bg-active-hover:  #fa5252;
   --color-font: #323232ff;
 

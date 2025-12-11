@@ -1,4 +1,33 @@
-import styled from "styled-components";
+import styled, { css, keyframes } from "styled-components";
+
+const heartJump = keyframes`
+  0% { transform: scale(1); }
+  25% { transform: scale(1.5); }
+  50% { transform: scale(1); }
+  75% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+`;
+
+const LikeButton = styled.button`
+  height: 50px;
+  width: 50px;
+  border-radius: var(--radius-circle);
+  background-color: ${(props) =>
+    props.count >= 1 ? "var(--bg-active)" : "var(--bg-like)"};
+  border: none;
+  transition: 0.5s ease-out;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--bg-active-hover);
+  }
+
+  ${(props) =>
+    props.animate &&
+    css`
+      animation: ${heartJump} 0.5s ease-out;
+    `}
+`;
 
 const QuoteCard = styled.blockquote`
   padding: 20px;
@@ -9,6 +38,7 @@ const QuoteCard = styled.blockquote`
   background-color: var(--bg-quote);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
+  overflow: hidden;
   animation: fadeIn 0.5s ease-out;
 
   @keyframes fadeIn {
@@ -25,16 +55,9 @@ const QuoteCard = styled.blockquote`
 
 const QuoteText = styled.p`
   font-size: var(--p-size);
-`;
-
-const LikeButton = styled.button`
-  height: 50px;
-  width: 50px;
-  border-radius: var(--radius-circle);
-  background-color: ${(props) =>
-    props.count >= 1 ? "var(--bg-active)" : "var(--bg-like)"};
-  border: none;
-  cursor: pointer;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
 `;
 
 const StyledDiv1 = styled.div`
@@ -56,13 +79,18 @@ export function QuoteBox({
   quoteTime,
   quote,
   getTimeAgo,
+  animateHeart,
 }) {
   return (
     <QuoteCard>
       <QuoteText>{quote}</QuoteText>
       <StyledDiv1>
         <StyledDiv2>
-          <LikeButton count={countLikes} onClick={onLikes}>
+          <LikeButton
+            count={countLikes}
+            onClick={onLikes}
+            animate={animateHeart}
+          >
             💜
           </LikeButton>
           <span>x {countLikes}</span>
