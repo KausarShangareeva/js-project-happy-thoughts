@@ -1,6 +1,6 @@
 # 😻 Happy Thoughts
 
-**Happy Thoughts** is a modern, interactive React app built during Technigo’s JavaScript Bootcamp (December 2025). The project allows users to read, like, and post positive thoughts, featuring dynamic content, interactive buttons, and responsive design.
+**Happy Thoughts** is a modern, interactive React app built during Technigo’s JavaScript Bootcamp (December 2025). The project allows users to read, like, and post positive thoughts, featuring dynamic content, interactive buttons, and a responsive design.
 
 The live project is available on [Netlify](https://happy-thoughts-2025.netlify.app/)
 
@@ -8,7 +8,7 @@ The live project is available on [Netlify](https://happy-thoughts-2025.netlify.a
 
 ## 🔗 Demo
 
-Check it out here: [Happy Thoughts Live Demo](#https://happy-thoughts-2025.netlify.app/)
+Check it out here: [Happy Thoughts Live Demo](https://happy-thoughts-2025.netlify.app/)
 
 ---
 
