@@ -2,7 +2,7 @@ import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyles = createGlobalStyle`
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap');
 
   
   *, *::after, *::before {
@@ -12,7 +12,7 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   html, body {
-  font-family: "Montserrat", sans-serif;
+  font-family: "Play", sans-serif;
   color: #323232ff;
   font-size: 16px; 
   margin: 0 auto;
@@ -30,8 +30,6 @@ body {
 #root {
   width: 100%;
 }
-
- 
 
   a {
     text-decoration: none;

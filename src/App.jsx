@@ -1,6 +1,7 @@
 import { GlobalStyles } from "./GlobalStyles";
 import styled from "styled-components";
-import { Form, QuoteBox } from "./Form.jsx";
+import { Form } from "./Form.jsx";
+import { QuoteBox } from "./Quote.jsx";
 import { useState } from "react";
 
 const StyledDiv = styled.div`
@@ -36,11 +37,9 @@ export const App = () => {
               quoteTime={q.time}
               getTimeAgo={getTimeAgo}
               onLikes={() => {
-                setQuote((prev) => {
-                  const newQuotes = [...prev];
-                  newQuotes[index].likes += 1;
-                  return newQuotes;
-                });
+                const newQuotes = [...quote];
+                newQuotes[index].likes += 1;
+                setQuote(newQuotes);
               }}
             />
           ))}
