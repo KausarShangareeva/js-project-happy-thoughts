@@ -4,6 +4,8 @@ import { TooLong } from "./TooLong";
 import { TooShort } from "./TooShort";
 import { RichedLimit } from "./RichedLimit";
 
+const API_URL = "https://js-project-api-express-js.onrender.com";
+
 const StyledForm = styled.form`
   background: var(--bg-form);
   border-radius: var(--radius);
@@ -50,14 +52,13 @@ const StyledButton = styled.button`
   cursor: pointer;
   transition: all 0.3s;
   font-family: "Play", sans-serif;
-  transition: all 0.3 ease-in;
 
   &:hover {
     background-color: var(--bg-active-hover);
   }
 `;
 
-export function Form({ setThoughts }) {
+export function Form({ setThoughts, user }) {
   const [inputValue, setInputValue] = useState("");
   const [charCount, setCharCount] = useState(0);
   const [showError, setShowError] = useState(false);
@@ -75,14 +76,14 @@ export function Form({ setThoughts }) {
       setShowError(true);
     } else {
       setShowError(false);
-      const res = await fetch(
-        "https://happy-thoughts-api-4ful.onrender.com/thoughts",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: inputValue }),
-        }
-      );
+      const res = await fetch(`${API_URL}/thoughts`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: user.accessToken,
+        },
+        body: JSON.stringify({ message: inputValue }),
+      });
       const newThoughtFromAPI = await res.json();
       setThoughts((prev) => [newThoughtFromAPI, ...prev]);
       setCharCount(0);
@@ -92,10 +93,10 @@ export function Form({ setThoughts }) {
 
   return (
     <StyledForm onSubmit={handleSubmit}>
-      <TitleH1>What's is making me happy!</TitleH1>
+      <TitleH1>What's making me happy!</TitleH1>
       <StyledInput
         type="text"
-        placeholder="Wraite your quote"
+        placeholder="Write your thought"
         value={inputValue}
         onChange={handleChange}
       ></StyledInput>
@@ -105,7 +106,7 @@ export function Form({ setThoughts }) {
       </p>
       {showError && charCount > 140 && <TooLong charCount={charCount} />}
       {showError && charCount < 10 && <TooShort charCount={charCount} />}
-      <StyledButton type="submit">💜 Send Happy Thought 💜</StyledButton>
+      <StyledButton type="submit">Send Happy Thought</StyledButton>
     </StyledForm>
   );
 }

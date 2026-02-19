@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled, { css, keyframes } from "styled-components";
 
 const heartJump = keyframes`
@@ -73,6 +74,32 @@ const StyledDiv2 = styled.div`
   gap: 10px;
 `;
 
+const AuthorName = styled.p`
+  font-size: 12px;
+  color: #868e96;
+`;
+
+const ActionButton = styled.button`
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px 8px;
+
+  &:hover {
+    opacity: 0.7;
+  }
+`;
+
+const EditInput = styled.input`
+  width: 100%;
+  padding: 10px;
+  border-radius: var(--radius-input);
+  border: 1px solid #dee2e6;
+  font-family: "Play", sans-serif;
+  font-size: 16px;
+`;
+
 export function QuoteBox({
   countLikes,
   onLikes,
@@ -80,10 +107,38 @@ export function QuoteBox({
   quote,
   getTimeAgo,
   animateHeart,
+  authorName,
+  isOwner,
+  onDelete,
+  onEdit,
 }) {
+  const [editing, setEditing] = useState(false);
+  const [editValue, setEditValue] = useState(quote);
+
+  const handleSave = () => {
+    if (editValue.length >= 5 && editValue.length <= 140) {
+      onEdit(editValue);
+      setEditing(false);
+    }
+  };
+
   return (
     <QuoteCard>
-      <QuoteText>{quote}</QuoteText>
+      {authorName && <AuthorName>by {authorName}</AuthorName>}
+
+      {editing ? (
+        <StyledDiv2 style={{ width: "100%" }}>
+          <EditInput
+            value={editValue}
+            onChange={(e) => setEditValue(e.target.value)}
+          />
+          <ActionButton onClick={handleSave}>Save</ActionButton>
+          <ActionButton onClick={() => setEditing(false)}>X</ActionButton>
+        </StyledDiv2>
+      ) : (
+        <QuoteText>{quote}</QuoteText>
+      )}
+
       <StyledDiv1>
         <StyledDiv2>
           <LikeButton
@@ -95,7 +150,16 @@ export function QuoteBox({
           </LikeButton>
           <span>x {countLikes}</span>
         </StyledDiv2>
-        <p>{getTimeAgo(quoteTime)}</p>
+
+        <StyledDiv2>
+          {isOwner && !editing && (
+            <>
+              <ActionButton onClick={() => setEditing(true)}>Edit</ActionButton>
+              <ActionButton onClick={onDelete}>Delete</ActionButton>
+            </>
+          )}
+          <p>{getTimeAgo(quoteTime)}</p>
+        </StyledDiv2>
       </StyledDiv1>
     </QuoteCard>
   );
